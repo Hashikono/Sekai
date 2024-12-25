@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <meta charset="UTF-8">
+    <style>
+
+    /*Generic "Sekai" title*/
+    #title {
+    color: #9ea781;
+        font-family: 'Brush Script MT', cursive;
+        text-align: left;
+        text-shadow: 1.8px 1.8px rgba(115, 115, 115, 0.795) ;
+        font-size: 40px;
+    }
+
+    /*General Text*/
+    .general {
+        font-family: 'Lucida Handwriting',cursive;
+        color:rgba(56, 56, 56, 0.877);
+        font-size: 18px;
+    }
+    
+    /*Universal*/
+    body{
+        background-color: rgb(60, 110, 110);
+    }
+
+    tr:nth-child(even) {
+        background-color: #848c82;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+    }
+    
+    table{
+        border-collapse: collapse; 
+        width: 100%; 
+        font-family: 'Lucida Handwriting'; 
+    }
+
+    .errInvis{
+        visibility: hidden;
+    }
+
+    .errVis{
+        visibility: visible;
+        font-family: 'Lucida Handwriting',cursive;
+        color:rgba(56, 56, 56, 0.877);
+        font-size: 18px;
+    }
+
+
+    </style>
+</head>
+<body>
+    
+    <!--Scripts-->
+    <script type="text/javascript">
+        var creAccDet = false;
+        var cour;
+
+        function sub(){
+            const user = document.getElementById('Username').value;
+            const pass = document.getElementById('Password').value;
+            if (user == 'Hashiko' && pass == 'asdfg') {
+                document.getElementById('logV').style.display='none'
+                document.getElementById('hashiV').style.display='block'
+
+                
+            } else if (user == localStorage.getItem('a') && pass == localStorage.getItem('b')) {
+                document.getElementById('logV').style.display='none'
+                if (creAccDet == true){
+                    document.getElementById('ccV').style.display='block'
+                    creAccDet = false;
+                } else {
+                    document.getElementById('userV').style.display='block'
+                }
+                
+            } else {
+                document.getElementById("error").setAttribute("class", "errVis")
+                setTimeout(errTime, 2100)
+            }
+            document.getElementById('Username').value = ''
+            document.getElementById('Password').value = ''
+        }
+
+        function cre(){
+            const user = document.getElementById('Username').value;
+            const pass = document.getElementById('Password').value;
+            localStorage.setItem('a', user);
+            localStorage.setItem('b', pass);
+            creAccDet = true;
+        }
+
+        function errTime(){
+            document.getElementById('error').setAttribute("class", "errInvis");
+        }
+
+        function japC(){ 
+            courseF('japanese')
+            document.getElementsByClassName('courseT').innerHTML="Course (" + cour + ");"
+        }
+        function spanC(){ 
+            courseF('spanish')
+            document.getElementByClassName('courseT').innerHTML="Course (" + cour + ");"
+        }
+        function mandC(){ 
+            courseF('mandarin')
+            document.getElementByClassName('courseT').innerHTML="Course (" + cour + ");"
+        }
+        function morsC(){ 
+            courseF('morseCode')
+            document.getElementByClassName('courseT').innerHTML="Course (" + cour + ");"
+        }
+        function korC(){ 
+            courseF('korean')
+            document.getElementByClassName('courseT').innerHTML="Course (" + cour + ");"
+            
+        }
+
+        function courseF(typ){
+            document.getElementById('ccV').style.display='none'
+            document.getElementById('hashiV').style.display='block'
+            cour = typ;
+        }
+
+        function editTable(){
+                const r1 = document.getElementById('sourceIn').value
+                const r2 = document.getElementById('descriptionIn').value
+                const r3 = document.getElementById('noteIn').value
+                var table = document.getElementById("personalList");
+                var row = table.insertRow(table.length);
+                var c1 = row.insertCell(0);
+                var c2 = row.insertCell(1);
+                var c3 = row.insertCell(2);
+                c1.innerHTML = r1
+                c2.innerHTML = r2
+                c3.innerHTML = r3
+                document.getElementById('sourceIn').value = ''
+                document.getElementById('descriptionIn').value = ''
+                document.getElementById('noteIn').value = ''
+                document.getElementById('hashiV').style.display='block'
+                document.getElementById('editScreen').style.display='none'
+        }
+
+        function editSc(){
+            document.getElementById('hashiV').style.display='none'
+            document.getElementById('editScreen').style.display='block'
+        }
+
+        function forumSc(){
+            document.getElementById('hashiV').style.display='none'
+            document.getElementById('forum').style.display='block'
+        }
+        function forumReturn(){
+            document.getElementById('hashiV').style.display='block'
+            document.getElementById('forum').style.display='none'
+        }
+
+    </script>
+    <!--Title (Does not disappear)-->
+    <h1 id="title">Sekai</h1>
+    <br><br>
+
+    <!--Login (div)-->
+    <div id="logV">
+        <label for="Username">Username:</label>
+        <input type="text" id="Username" required><br><br>
+        <label for="Password">Password:&nbsp;</label>
+        <input type="text" id="Password" required><br><br>
+        <button onclick="sub()" class="general">Submit</button>
+        <button onclick="cre()" class="general">Create an Account</button>
+        <p id="error" class="errInvis">The following Password and/or Username was not found, please try again :></p>
+    </div>
+
+    <!--Choose Course (div)-->
+    <div id="ccV" style="display: none;">
+        <p>Choose one of our premade courses to get started:</p>
+        <input type="button" id="jap" onclick="japC()">
+        <label for="jap">; Japanese</label><br><br>
+        <input type="button" id="span" onclick="spanC()">
+        <label for="span">; Spanish</label><br><br>
+        <input type="button" id="mand" onclick="mandC()">
+        <label for="mand">; Mandarin (Chinese)</label><br><br>
+        <input type="button" id="mors" onclick="morsC()">
+        <label for="mors">; Morse Code</label><br><br>
+        <input type="button" id="kor" onclick="korC()">
+        <label for="kor">; Korean</label><br><br>
+    </div>
+
+    <!--Hashiko's screen (div) [set]-->
+    <div id="hashiV" style="display: none;">
+        <p style="text-align: center; font-family: 'Lucida Handwriting',cursive; color:rgba(56, 56, 56, 0.877);font-size: 18px;" class="CourseT">Course (japanese);</p>
+        <table>
+            <tr>
+              <th>Source;</th>
+              <th>Description;</th>
+              <th>Notes;</th>
+            </tr>
+            <tr>
+              <td><a href="https://www.wanikani.com/">Wanikani</a></td>
+              <td>A spaced-repetition-system that helps with learning Kanji and vocabulary</td>
+              <td>You will have to pay if you want to continue past level 3</td>
+            </tr>
+            <tr>
+              <td><a href="https://jisho.org/">Jisho</a></td>
+              <td>A Japanese to English dictionary</td>
+              <td>really easy to look up kanji and words</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.tofugu.com/">Tofugu</a></td>
+              <td>Articles about japanese grammar and travel tips</td>
+              <td>Long articles but really informative</td>
+            </tr>
+            <tr>
+              <td><a href="https://cotoacademy.com/ultimate-guide-to-passing-the-jlpt-n1-exam/">Coto Academy</a></td>
+              <td>An article that guides you through the basics of the JLPT test</td>
+              <td>A good overview on what you should study for</td>
+            </tr>
+            <tr>
+              <td><a href="https://nihongoichiban.com/home/japanese-grammar-particles/">Particles List</a></td>
+              <td>A list containing nearly every particle and their meanings</td>
+              <td>Be weary of a few missing pieces of information</td>
+            </tr>
+            <tr>
+              <td><a href="https://kana.pro/">Kana Pro</a></td>
+              <td>Katakana and Hiragana quiz</td>
+              <td>A quick way to memorize kana</td>
+            </tr>
+        </table>
+        <br><br><br><hr><br><br>
+        <p style="text-align: left; font-family: 'Lucida Handwriting',cursive; color:rgba(56, 56, 56, 0.877);font-size: 18px;">My List;</p>
+        <table id="personalList">
+            <tr>
+              <th>Source;</th>
+              <th>Description;</th>
+              <th>Notes;</th>
+            </tr>
+        </table>
+        <br><br><hr><br>
+        <button onclick="editSc()" class="general">Edit</button>
+        <button onclick="forumSc()" class="general">Forum Page</button>
+    </div>
+    
+    <!--Edit(List) Screen-->
+    <div id="editScreen" style="display: none;">
+        <label for="sourceIn">Source:</label>
+        <input type="url" id="sourceIn" required><br><br>
+        <label for="descriptionIn">Description:</label>
+        <input type="text" id="descriptionIn" required><br><br>
+        <label for="noteIn">Note:</label>
+        <input type="text" id="noteIn" required><br><br>
+        <button onclick="editTable()">Update Table</button>
+    </div>
+
+    <!--Forum Screen-->
+    <div id="forum" style="display: none;">
+        <div style="float: right;">
+            <input type="text" placeholder="Search...">
+            <button type="submit" class="general">&#x1F50E;&#xFE0E;</button>
+        </div>
+        <br><hr><br><br>
+        <h2 class="general"><u>Trending Suggestions</u>:</h2>
+        <br>
+        <p class="general" style="font-size:18px; color:#171716;"><b><i>IL0veNihon289</i></b></p>
+        <p class="general"><b>Add Duolingo to the Japanese Course</b></p>
+        <p style="font-family: Arial; font-size: 16px; color:#3d3e3c;">They recently improved their Japanese course with Anime phrases</p>
+        <h3 class="general">Votes: 15/100</h3>
+        <hr>
+        <p class="general" style="font-size:18px; color:#171716;"><b><i>xItalyLover3x</i></b></p>
+        <p class="general"><b>Improve the Morse Code Course</b></p>
+        <p style="font-family: Arial; font-size: 16px; color:#3d3e3c;">There is a severe lack of material and sources in the course (e.g: no srs systems)</p>
+        <h3 class="general">Votes: 95/100</h3>
+        <hr><br><br><br>
+        <button class="general" style="font-size: 25px; border-radius: 60%;">+</button><br><br>
+        <button onclick="forumReturn()" class="general">Return</button>
+    </div>
+
+    <!--User screen (div)-->
+    <div id="userV" style="display: none;">
+        <p class="general">Under Construction. . .</p>
+    </div>
+
+</body>
+</html>
+
+
